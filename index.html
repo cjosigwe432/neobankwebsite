@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickCash POS - Fast & Secure Financial Services</title>
+    <title>QuickCash POS - Fast & Secure Financial Services | Owerri</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
@@ -19,7 +17,6 @@
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             font-family: 'Poppins', sans-serif;
             background: #f8fafc;
@@ -27,7 +24,6 @@
             line-height: 1.6;
         }
         
-        /* Navbar (same as before, slightly improved) */
         nav {
             background: var(--dark);
             color: white;
@@ -47,11 +43,12 @@
             align-items: center;
         }
         
-        .logo { font-size: 1.8rem; font-weight: 700; color: white; text-decoration: none; }
+        .logo { font-size: 1.85rem; font-weight: 700; color: white; text-decoration: none; }
+        .logo span { color: var(--success); }
         
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.8rem;
             list-style: none;
         }
         
@@ -66,26 +63,17 @@
         
         .hamburger { display: none; font-size: 1.8rem; cursor: pointer; color: white; }
         
-        /* Hero */
         .hero {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 160px 20px 100px;
+            padding: 180px 20px 120px;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
         
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://images.unsplash.com/photo-1605902711622-cfb43c4437d1') center/cover no-repeat;
-            opacity: 0.12;
-        }
-        
         .hero h1 {
-            font-size: 3.2rem;
+            font-size: 3.1rem;
             margin-bottom: 1rem;
         }
         
@@ -93,100 +81,66 @@
             display: inline-block;
             background: var(--success);
             color: white;
-            padding: 14px 32px;
+            padding: 14px 34px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
         }
         
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(34, 197, 94, 0.4); }
+        .btn:hover { transform: translateY(-4px); }
         
-        section { padding: 80px 20px; }
+        section { padding: 90px 20px; }
         .container { max-width: 1200px; margin: 0 auto; }
-        h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: var(--dark); }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
+        h2 { text-align: center; font-size: 2.6rem; margin-bottom: 3rem; color: var(--dark); }
         
         .card {
             background: white;
             border-radius: 20px;
-            padding: 30px;
+            padding: 32px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             transition: all 0.4s ease;
             text-align: center;
         }
         
-        .card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+        .card:hover { transform: translateY(-10px); }
         
-        /* Live Counter */
-        #live-counter {
-            background: linear-gradient(135deg, #111827, #1e2937);
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-            border-radius: 20px;
-            margin: 40px 0;
-        }
-        
-        .counter-number {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: var(--success);
-        }
-        
-        /* Calculator */
-        .calculator {
+        .app-setup {
             background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            max-width: 500px;
+            padding: 45px;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            max-width: 720px;
             margin: 0 auto;
-        }
-        
-        input[type="number"] {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            margin: 15px 0;
-        }
-        
-        /* Testimonials Carousel */
-        .carousel {
-            position: relative;
-            overflow: hidden;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .slides {
-            display: flex;
-            transition: transform 0.6s ease;
-        }
-        
-        .slide {
-            min-width: 100%;
-            padding: 30px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
             text-align: center;
         }
         
-        /* Footer same as before */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 60px 20px 30px;
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        
+        .close {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #64748b;
         }
         
         @media (max-width: 768px) {
@@ -199,12 +153,12 @@
                 background: var(--dark);
                 flex-direction: column;
                 align-items: center;
-                padding-top: 50px;
+                padding-top: 60px;
                 transition: 0.4s ease;
             }
             .nav-links.active { left: 0; }
             .hamburger { display: block; }
-            .hero h1 { font-size: 2.5rem; }
+            .hero h1 { font-size: 2.4rem; }
         }
     </style>
 </head>
@@ -213,89 +167,102 @@
     <!-- Navbar -->
     <nav id="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">QuickCash <span style="color:#22C55E;">POS</span></a>
+            <a href="#" class="logo">QuickCash <span>POS</span></a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#app-setup" class="nav-link">Agent App</a></li>
                 <li><a href="#calculator" class="nav-link">Calculator</a></li>
-                <li><a href="#faq" class="nav-link">FAQ</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#" onclick="showLoginModal()" class="nav-link">Login</a></li>
+                <li><a href="#" onclick="showSignupModal()" class="nav-link">Signup</a></li>
             </ul>
+            <div id="user-info" style="color: var(--success); font-weight: 600; display: none; margin-left: 15px;"></div>
             <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
         </div>
     </nav>
 
     <!-- Hero -->
     <section id="home" class="hero">
-        <div style="max-width: 800px; margin: 0 auto; position: relative; z-index: 2;">
-            <h1>Instant Financial Services,<br>Zero Stress</h1>
-            <p style="font-size: 1.3rem; margin: 1.5rem 0;">Withdraw • Transfer • Pay Bills with the lowest charges in Nigeria</p>
-            <a href="https://wa.me/2349168144059" class="btn" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+        <div style="max-width: 850px; margin: 0 auto; position: relative; z-index: 2;">
+            <h1>Instant POS Services in Owerri</h1>
+            <p style="font-size: 1.35rem; margin: 1.5rem 0;">Fast Cash Withdrawal • Bank Transfers • Bill Payments<br>Lowest charges in Imo State</p>
+            <a href="https://wa.me/2349168144059" class="btn" target="_blank" style="margin: 10px;">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
         </div>
     </section>
-
-    <!-- Live Transactions -->
-    <div class="container">
-        <div id="live-counter">
-            <p style="margin-bottom: 10px; opacity: 0.9;">🔴 Live Transactions Right Now</p>
-            <div class="counter-number" id="transaction-count">1,248</div>
-            <p style="margin-top: 10px; font-size: 1.1rem;">Transactions processed today</p>
-        </div>
-    </div>
 
     <!-- Services -->
     <section id="services">
         <div class="container">
-            <h2>Our Services</h2>
-            <div class="grid">
+            <h2>Our Services in Owerri</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
                 <div class="card">
                     <i class="fas fa-money-bill-wave" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
                     <h3>Cash Withdrawal</h3>
-                    <p>Fast cash out with minimal fees</p>
+                    <p>Instant cash with very low fees</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-exchange-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
                     <h3>Money Transfer</h3>
-                    <p>Instant transfer to any bank</p>
+                    <p>Send to any bank instantly</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-file-invoice" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
                     <h3>Bill Payments</h3>
-                    <p>Electricity, Airtime, Cable & more</p>
+                    <p>Airtime, Electricity, Cable TV & more</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Amount Calculator -->
-    <section id="calculator" style="background: #f1f5f9;">
+    <!-- Agent App Setup -->
+    <section id="app-setup" style="background: #f1f5f9;">
+        <div class="container">
+            <h2>QuickCash POS Agent App</h2>
+            <div class="app-setup">
+                <p style="font-size:1.25rem; margin-bottom:30px;">
+                    Join thousands of agents in Owerri and Imo State. Our dedicated Android App is launching soon with real-time dashboard, transaction history, and earnings tracker.
+                </p>
+                
+                <div style="background:#f8fafc; padding:35px; border-radius:16px; margin:30px 0;">
+                    <h3 style="color:var(--success); margin-bottom:20px;">Start Operating Today</h3>
+                    <a href="https://wa.me/2349168144059" target="_blank" class="btn" style="font-size:1.15rem; padding:16px 40px;">
+                        <i class="fab fa-whatsapp"></i> Register as Agent Now
+                    </a>
+                </div>
+                
+                <h3 style="margin:30px 0 15px;">How to Become a QuickCash Agent in Owerri:</h3>
+                <ol style="text-align:left; max-width:500px; margin:0 auto; line-height:2.1; font-size:1.05rem;">
+                    <li>Click the WhatsApp button above or call <strong>0916 814 4059</strong></li>
+                    <li>Send your Full Name, Phone Number & Location in Owerri/Imo</li>
+                    <li>Complete quick verification</li>
+                    <li>Get activated instantly and start earning</li>
+                    <li>Download the official app when it launches on Google Play</li>
+                </ol>
+                
+                <p style="margin-top:40px; color:#64748b;">
+                    The full QuickCash POS Agent App will be available on Google Play Store very soon.<br>
+                    Registered agents will get priority notification and early access.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator -->
+    <section id="calculator" style="background: white;">
         <div class="container">
             <h2>Calculate Your Charges</h2>
-            <div class="calculator">
+            <div style="max-width:520px; margin:0 auto; background:white; padding:40px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
                 <label><strong>Enter Amount (₦)</strong></label>
-                <input type="number" id="amount" placeholder="5000" min="100">
+                <input type="number" id="amount" placeholder="5000" min="100" style="width:100%; padding:15px; border:2px solid #e2e8f0; border-radius:12px; margin:15px 0;">
+                <button onclick="calculateCharges()" class="btn" style="width:100%;">Calculate Charges</button>
                 
-                <button onclick="calculateCharges()" class="btn" style="width: 100%; margin-top: 20px;">Calculate</button>
-                
-                <div id="result" style="margin-top: 25px; display: none; text-align: left; background: #f8fafc; padding: 20px; border-radius: 12px;">
-                    <p><strong>Withdrawal Charge:</strong> <span id="charge">₦100</span></p>
-                    <p><strong>You Receive:</strong> <span id="receive" style="color: var(--success); font-size: 1.3rem;"></span></p>
+                <div id="result" style="margin-top:25px; display:none; background:#f8fafc; padding:20px; border-radius:12px; text-align:left;">
+                    <p><strong>Withdrawal Charge:</strong> <span id="charge"></span></p>
+                    <p><strong>You Receive:</strong> <span id="receive" style="color:var(--success); font-size:1.35rem; font-weight:600;"></span></p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Carousel -->
-    <section style="background: white;">
-        <div class="container">
-            <h2>What Our Customers Say</h2>
-            <div class="carousel">
-                <div class="slides" id="slides">
-                    <!-- Populated by JS -->
-                </div>
-                
-                <button onclick="prevSlide()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer;">‹</button>
-                <button onclick="nextSlide()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer;">›</button>
             </div>
         </div>
     </section>
@@ -303,160 +270,134 @@
     <!-- Contact -->
     <section id="contact">
         <div class="container">
-            <h2>Get In Touch</h2>
-            <div class="card" style="max-width: 600px; margin: 0 auto; text-align: center;">
-                <p style="font-size: 1.2rem;">Call: <strong>0916 814 4059</strong></p>
-                <a href="https://wa.me/2349168144059" class="btn" target="_blank" style="margin: 20px 0;">Chat on WhatsApp</a>
+            <h2>Get In Touch - Owerri</h2>
+            <div style="max-width:620px; margin:0 auto; background:white; padding:40px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.08); text-align:center;">
+                <p style="font-size:1.3rem; margin-bottom:20px;">Call / WhatsApp: <strong>0916 814 4059</strong></p>
                 
-                <!-- Simple Inquiry Form -->
-                <form id="inquiryForm" style="margin-top: 30px; text-align: left;">
-                    <input type="text" id="name" placeholder="Your Name" required style="width:100%; padding:12px; margin-bottom:15px; border-radius:10px; border:1px solid #ddd;">
-                    <input type="tel" id="phone" placeholder="Phone Number" required style="width:100%; padding:12px; margin-bottom:15px; border-radius:10px; border:1px solid #ddd;">
-                    <textarea id="message" placeholder="How can we help you?" rows="4" style="width:100%; padding:12px; border-radius:10px; border:1px solid #ddd;"></textarea>
-                    <button type="submit" class="btn" style="width:100%; margin-top:15px;">Send Inquiry</button>
+                <form id="inquiryForm" action="https://api.web3forms.com/submit" method="POST" style="text-align:left; margin-top:30px;">
+                    <input type="hidden" name="access_key" value="2b23ab93-c4df-4bd1-a0c6-1f4cd33e5623"><!--Replace with your Web3Forms key -->
+                    <input type="hidden" name="subject" value="New Inquiry from QuickCash POS Owerri">
+                    
+                    <input type="text" name="name" placeholder="Your Full Name" required style="width:100%; padding:13px; margin-bottom:15px; border:1px solid #ddd; border-radius:10px;">
+                    <input type="tel" name="phone" placeholder="Phone Number" required style="width:100%; padding:13px; margin-bottom:15px; border:1px solid #ddd; border-radius:10px;">
+                    <textarea name="message" placeholder="Message (e.g. I want to become an agent in Owerri)" rows="5" required style="width:100%; padding:13px; border:1px solid #ddd; border-radius:10px;"></textarea>
+                    
+                    <button type="submit" class="btn" style="width:100%; margin-top:15px;">Send Message</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container" style="text-align: center;">
-            <p>©️ 2026 QuickCash POS • All Rights Reserved | Onitsha, Anambra</p>
-        </div>
+    <footer style="background:var(--dark); color:white; padding:50px 20px; text-align:center;">
+        <p>©️ 2026 QuickCash POS • All Rights Reserved | Owerri, Imo State</p>
     </footer>
 
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModals()">×</span>
+            <h3 style="text-align:center; margin-bottom:25px;">Agent Login</h3>
+            <input type="tel" id="loginPhone" placeholder="Phone Number" style="width:100%; padding:14px; margin-bottom:15px; border-radius:10px; border:1px solid #ddd;">
+            <input type="password" id="loginPassword" placeholder="Password" style="width:100%; padding:14px; margin-bottom:20px; border-radius:10px; border:1px solid #ddd;">
+            <button onclick="performLogin()" class="btn" style="width:100%; background:var(--primary);">Login</button>
+            <p style="text-align:center; margin-top:20px; font-size:0.95rem;">New agent? <a href="#" onclick="switchToSignup()">Sign up here</a></p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModals()">×</span>
+            <h3 style="text-align:center; margin-bottom:25px;">Become an Agent in Owerri</h3>
+            <input type="text" id="signupName" placeholder="Full Name" style="width:100%; padding:14px; margin-bottom:15px; border-radius:10px; border:1px solid #ddd;">
+            <input type="tel" id="signupPhone" placeholder="Phone Number (0916 814 4059)" style="width:100%; padding:14px; margin-bottom:15px; border-radius:10px; border:1px solid #ddd;">
+            <input type="password" id="signupPassword" placeholder="Create Password" style="width:100%; padding:14px; margin-bottom:20px; border-radius:10px; border:1px solid #ddd;">
+            <button onclick="performSignup()" class="btn" style="width:100%; background:var(--primary);">Create Agent Account</button>
+            <p style="text-align:center; margin-top:20px; font-size:0.95rem;">Already registered? <a href="#" onclick="switchToLogin()">Login here</a></p>
+        </div>
+    </div>
+
     <script>
-        // Mobile Menu
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-        
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            const icon = hamburger.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
+        // Mobile menu
+        document.getElementById('hamburger').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
         });
 
-        // Smooth scrolling + active link
+        // Smooth scroll
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) target.scrollIntoView({ behavior: 'smooth' });
-                
-                // Close mobile menu
-                navLinks.classList.remove('active');
-                
-                // Highlight active
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
+                document.getElementById('navLinks').classList.remove('active');
             });
         });
 
-        // Live Transaction Counter
-        let count = 1248;
-        const counterEl = document.getElementById('transaction-count');
-        
-        function updateCounter() {
-            count += Math.floor(Math.random() * 5) + 2;   // random increase
-            counterEl.textContent = count.toLocaleString('en-US');
-        }
-        
-        setInterval(updateCounter, 1800);   // update every 1.8 seconds
-
-        // Charges Calculator
+        // Calculator
         function calculateCharges() {
-            const amountInput = document.getElementById('amount');
-            const resultDiv = document.getElementById('result');
-            const chargeEl = document.getElementById('charge');
-            const receiveEl = document.getElementById('receive');
-            
-            let amount = parseFloat(amountInput.value);
-            
+            let amount = parseFloat(document.getElementById('amount').value);
             if (!amount || amount < 100) {
-                alert("Please enter a valid amount (minimum ₦100)");
+                alert("Enter a valid amount (minimum ₦100)");
                 return;
             }
-            
-            // Simple charge logic: ₦100 per ₦5,000 or part thereof
-            const charge = Math.ceil(amount / 5000) * 100;
-            const receive = amount - charge;
-            
-            chargeEl.textContent = `₦${charge}`;
-            receiveEl.textContent = `₦${receive.toLocaleString()}`;
-            
-            resultDiv.style.display = 'block';
-            
-            // Fake processing effect
-            resultDiv.style.opacity = '0.6';
-            setTimeout(() => resultDiv.style.opacity = '1', 400);
+            let charge = Math.ceil(amount / 5000) * 100;
+            let receive = amount - charge;
+            document.getElementById('charge').textContent = '₦' + charge;
+            document.getElementById('receive').textContent = '₦' + receive.toLocaleString();
+            document.getElementById('result').style.display = 'block';
         }
 
-        // Testimonials Carousel
-        const testimonials = [
-            { name: "Chinonso Okeke", text: "Fastest withdrawal ever! Charges are very fair.", location: "Onitsha" },
-            { name: "Aisha Mohammed", text: "Transferred ₦50,000 instantly. Excellent service!", location: "Awka" },
-            { name: "Emeka Nwosu", text: "Best POS in Anambra. Always reliable 24/7.", location: "Nnewi" }
-        ];
-        
-        let currentSlide = 0;
-        const slidesContainer = document.getElementById('slides');
-        
-        function renderSlides() {
-            slidesContainer.innerHTML = '';
-            testimonials.forEach((t, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'slide';
-                slide.innerHTML = `
-                    <p style="font-style:italic; font-size:1.1rem;">"${t.text}"</p>
-                    <strong>${t.name}</strong><br>
-                    <small>${t.location}, Anambra</small>
-                `;
-                slidesContainer.appendChild(slide);
-            });
+        // Modals
+        function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
+        function showSignupModal() { document.getElementById('signupModal').style.display = 'flex'; }
+        function closeModals() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('signupModal').style.display = 'none';
         }
-        
-        function showSlide(index) {
-            currentSlide = (index + testimonials.length) % testimonials.length;
-            slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }
-        
-        function nextSlide() { showSlide(currentSlide + 1); }
-        function prevSlide() { showSlide(currentSlide - 1); }
-        
-        // Auto slide every 5 seconds
-        setInterval(() => nextSlide(), 5000);
-        
-        // Real Form Submission
-const form = document.getElementById('inquiryForm');
+        function switchToSignup() { closeModals(); setTimeout(showSignupModal, 300); }
+        function switchToLogin() { closeModals(); setTimeout(showLoginModal, 300); }
 
-form.addEventListener('submit', function() {
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn.innerHTML;
-    
-    submitBtn.innerHTML = 'Sending Inquiry...';
-    submitBtn.disabled = true;
-    
-    // The form will submit naturally to Web3Forms
-    // You can add a custom thank you message if needed later
-});
-        
-        // Initialize everything
-        window.onload = function() {
-            renderSlides();
-            showSlide(0);
-            
-            // Navbar scroll effect
-            window.addEventListener('scroll', () => {
-                const navbar = document.getElementById('navbar');
-                if (window.scrollY > 100) {
-                    navbar.style.background = 'rgba(17, 24, 39, 0.98)';
-                } else {
-                    navbar.style.background = 'var(--dark)';
+        function performSignup() {
+            let name = document.getElementById('signupName').value.trim();
+            let phone = document.getElementById('signupPhone').value.trim();
+            if (!name || !phone) return alert("Please enter name and phone number");
+            localStorage.setItem('quickcash_user', JSON.stringify({name, phone}));
+            alert(`✅ Welcome ${name}! Your agent account has been created.\nYou can now login.`);
+            closeModals();
+        }
+
+        function performLogin() {
+            let phone = document.getElementById('loginPhone').value.trim();
+            let stored = localStorage.getItem('quickcash_user');
+            if (stored) {
+                let user = JSON.parse(stored);
+                if (user.phone === phone) {
+                    document.getElementById('user-info').textContent = `Hi, ${user.name}`;
+                    document.getElementById('user-info').style.display = 'block';
+                    alert("✅ Login successful! Welcome back to QuickCash POS Owerri.");
+                    closeModals();
+                    return;
                 }
-            });
+            }
+            alert("Phone number not found. Please sign up first.");
+        }
+
+        // Form feedback
+        document.getElementById('inquiryForm').addEventListener('submit', function() {
+            let btn = this.querySelector('button');
+            btn.textContent = "Sending...";
+            btn.disabled = true;
+        });
+
+        // Auto greet logged in user
+        window.onload = function() {
+            let stored = localStorage.getItem('quickcash_user');
+            if (stored) {
+                let user = JSON.parse(stored);
+                document.getElementById('user-info').textContent = `Hi, ${user.name}`;
+                document.getElementById('user-info').style.display = 'block';
+            }
         };
     </script>
 </body>
 </html>
-<script src="script.js"></script>
