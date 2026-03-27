@@ -3,501 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buike POS - Fast & Secure Financial Services | Owerri</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
+    <title>HellaStore • Shop Premium in Owerri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root {
-            --primary: #4F46E5;
-            --success: #22C55E;
-            --dark: #111827;
-            --gray: #64748b;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat;
+            /* Replace the URL above with a real Owerri image if you want (e.g., aerial view or market vibe) */
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f8fafc;
-            color: #1e2937;
-            line-height: 1.6;
-        }
-        nav {
-            background: var(--dark);
-            color: white;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo { font-size: 1.95rem; font-weight: 700; color: white; text-decoration: none; }
-        .logo span { color: var(--success); }
-        .nav-links { display: flex; gap: 2rem; list-style: none; }
-        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
-        .nav-links a:hover { color: var(--success); }
-        .hamburger { display: none; font-size: 1.8rem; cursor: pointer; color: white; }
-
-        .hero {
-            background: linear-gradient(135deg, var(--primary), #22C55E);
-            color: white;
-            padding: 180px 20px 130px;
-            text-align: center;
-        }
-        .btn {
-            display: inline-block;
-            background: var(--success);
-            color: white;
-            padding: 14px 34px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .btn:hover { transform: translateY(-4px); }
-
-        section { padding: 90px 20px; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        h2 { text-align: center; font-size: 2.6rem; margin-bottom: 3rem; color: var(--dark); }
-
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 32px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .card:hover { transform: translateY(-10px); }
-
-        /* App Demo */
-        .app-modal {
-            display: none;
-            position: fixed;
-            z-index: 3000;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            align-items: center;
-            justify-content: center;
-        }
-        .phone-frame {
-            width: 340px;
-            height: 680px;
-            background: #111827;
-            border-radius: 50px;
-            padding: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-        }
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: #f8fafc;
-            border-radius: 38px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .app-header {
-            background: var(--dark);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-weight: 600;
-        }
-        .app-balance {
-            background: white;
-            margin: 15px;
-            padding: 20px;
-            border-radius: 16px;
-            text-align: center;
-        }
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            padding: 20px;
-        }
-        .service-card {
-            background: white;
-            padding: 15px 8px;
-            border-radius: 14px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        .service-card:active { transform: scale(0.92); }
-
-        .transfer-screen {
-            padding: 20px;
-            background: white;
-            height: 100%;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.65);
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content {
-            background: white;
-            padding: 35px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 420px;
-        }
-        .close { float: right; font-size: 2rem; cursor: pointer; color: var(--gray); }
-
-        input, textarea {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 15px;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-        }
-        #formMessage { padding: 12px; border-radius: 10px; margin-top: 15px; font-weight: 500; }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background: var(--dark);
-                flex-direction: column;
-                padding-top: 60px;
-            }
-            .nav-links.active { left: 0; }
-            .hamburger { display: block; }
-        }
+        .product-card { transition: all 0.3s ease; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.15); }
     </style>
 </head>
-<body>
-
+<body class="bg-zinc-950 text-zinc-200">
     <!-- Navbar -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">Buike <span>POS</span></a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#" onclick="openAppDemo()">App Demo</a></li>
-                <li><a href="#calculator">Calculator</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div style="display:flex; align-items:center; gap:15px;">
-                <div id="user-info" style="color: var(--success); font-weight: 600; display: none;"></div>
-                <button id="logoutBtn" onclick="logout()" style="display:none; background:none; border:none; color:white; cursor:pointer;">Logout</button>
-                <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+    <nav class="bg-black border-b border-zinc-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">H</div>
+                <span class="text-3xl font-semibold tracking-tight text-white">HellaStore</span>
             </div>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#shop" class="hover:text-emerald-400 transition">Shop</a>
+                <a href="#how" class="hover:text-emerald-400 transition">How it Works</a>
+                <a href="#" onclick="showCart()" class="flex items-center gap-2 hover:text-emerald-400">
+                    <i class="fas fa-shopping-cart"></i> Cart (<span id="cart-count" class="font-bold">0</span>)
+                </a>
+            </div>
+            <button onclick="window.open('https://paystack.com','_blank')" 
+                    class="bg-white text-black px-6 py-3 rounded-2xl font-semibold flex items-center gap-2 hover:bg-zinc-100 transition">
+                <i class="fas fa-naira-sign"></i> Secure Checkout
+            </button>
         </div>
     </nav>
 
     <!-- Hero -->
-    <section id="home" class="hero">
-        <div style="max-width: 850px; margin: 0 auto;">
-            <h1>Buike POS Owerri</h1>
-            <p style="font-size: 1.35rem; margin: 1.5rem 0;">Instant Cash • Transfers • Bill Payments<br>Lowest charges in Imo State</p>
-            <button onclick="openAppDemo()" class="btn" style="margin:10px;">Try App Demo</button>
-            <button onclick="showSignupModal()" class="btn" style="margin:10px; background:#4F46E5;">Create Agent Account</button>
-        </div>
-    </section>
-
-    <!-- Services -->
-    <section id="services">
-        <div class="container">
-            <h2>Our Services</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
-                <div class="card" onclick="openAppDemo()">
-                    <i class="fas fa-money-bill-wave" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                    <h3>Cash Withdrawal</h3>
-                    <p>Fast cash out</p>
+    <section class="hero-bg h-screen flex items-center text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl">
+                <span class="inline-block bg-emerald-500/10 text-emerald-400 text-xs font-medium tracking-widest px-6 py-2 rounded-full mb-6">OWERRI • IMO STATE</span>
+                <h1 class="text-6xl md:text-7xl font-bold leading-none tracking-tighter mb-6">
+                    Shop quality.<br>Delivered fast in Owerri.
+                </h1>
+                <p class="text-xl text-zinc-300 mb-10">Premium electronics, fashion, beauty & home items. Same-day delivery across Owerri and Imo State. Trusted local store.</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})" 
+                            class="bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-lg px-10 py-6 rounded-3xl transition">
+                        Browse Products
+                    </button>
+                    <a href="#" onclick="alert('Seller dashboard coming soon – list your products from Douglas or Relief Market!')" 
+                       class="border border-white/50 hover:border-white px-10 py-6 rounded-3xl font-semibold transition text-center">
+                        Sell on HellaStore
+                    </a>
                 </div>
-                <div class="card" onclick="openAppDemo()">
-                    <i class="fas fa-exchange-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                    <h3>Money Transfer</h3>
-                    <p>To any bank instantly</p>
-                </div>
-                <div class="card" onclick="openAppDemo()">
-                    <i class="fas fa-file-invoice" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                    <h3>Bill Payments</h3>
-                    <p>Airtime, Electricity, Cable TV</p>
+                <div class="mt-12 flex gap-8 text-sm">
+                    <div class="flex items-center gap-2"><i class="fas fa-truck text-emerald-400"></i> Fast delivery in Owerri</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-shield-alt text-emerald-400"></i> Paystack secured</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- App Demo Section -->
-    <section id="app-setup" style="background: #f1f5f9;">
-        <div class="container">
-            <h2>Buike POS Mobile App</h2>
-            <div style="background: white; padding: 45px; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); max-width: 720px; margin: 0 auto; text-align: center;">
-                <p style="font-size:1.25rem; margin-bottom:25px;">Experience the real Buike POS app right here.<br>Tap services and transfer money like the actual app.</p>
-                <button onclick="openAppDemo()" class="btn" style="font-size:1.2rem; padding:18px 50px;">
-                    <i class="fas fa-mobile-alt"></i> Open App Demo
-                </button>
-            </div>
+    <!-- Shop -->
+    <section id="shop" class="max-w-7xl mx-auto px-6 py-20">
+        <div class="text-center mb-16">
+            <h2 class="text-5xl font-semibold tracking-tight mb-3">Featured in Owerri</h2>
+            <p class="text-zinc-400">Popular items loved by shoppers in Imo State</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="products-grid">
+            <!-- Products added by JavaScript -->
         </div>
     </section>
 
-    <!-- Calculator -->
-    <section id="calculator">
-        <div class="container">
-            <h2>Calculate Charges</h2>
-            <div style="max-width:520px; margin:0 auto; background:white; padding:40px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
-                <label><strong>Enter Amount (₦)</strong></label>
-                <input type="number" id="amount" placeholder="5000" min="100">
-                <button onclick="calculateCharges()" class="btn" style="width:100%; margin-top:20px;">Calculate</button>
-                <div id="result" style="margin-top:25px; display:none; background:#f8fafc; padding:20px; border-radius:12px;">
-                    <p><strong>Charge:</strong> <span id="charge"></span></p>
-                    <p><strong>You Receive:</strong> <span id="receive" style="color:var(--success); font-size:1.35rem;"></span></p>
+    <!-- How it Works -->
+    <section id="how" class="bg-zinc-900 py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-semibold text-center mb-12">How HellaStore Works</h2>
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="text-center">
+                    <div class="w-16 h-16 mx-auto bg-zinc-800 rounded-2xl flex items-center justify-center text-4xl mb-6">🛒</div>
+                    <h3 class="text-2xl font-medium mb-3">Browse & Select</h3>
+                    <p class="text-zinc-400">High-quality products with clear details and real customer feedback.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 mx-auto bg-zinc-800 rounded-2xl flex items-center justify-center text-4xl mb-6">💳</div>
+                    <h3 class="text-2xl font-medium mb-3">Pay Securely</h3>
+                    <p class="text-zinc-400">Powered by Paystack – supports cards, bank transfer & USSD.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 mx-auto bg-zinc-800 rounded-2xl flex items-center justify-center text-4xl mb-6">📦</div>
+                    <h3 class="text-2xl font-medium mb-3">Fast Local Delivery</h3>
+                    <p class="text-zinc-400">Same-day in Owerri, next-day in most parts of Imo State.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact -->
-    <section id="contact">
-        <div class="container">
-            <h2>Contact Buike POS - Owerri</h2>
-            <div style="max-width:620px; margin:0 auto; background:white; padding:40px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
-                <p style="font-size:1.3rem; margin-bottom:25px; text-align:center;">Call / WhatsApp: <strong>0916 814 4059</strong></p>
-                <form id="inquiryForm">
-                    <input type="hidden" name="access_key" value="2b23ab93-c4df-4bd1-a0c6-1f4cd33e5623"> <!-- Replace with your real Web3Forms key -->    
-                    <input type="hidden" name="subject" value="New Inquiry - Buike POS Owerri">
-                    <input type="text" name="name" placeholder="Your Full Name" required>
-                    <input type="tel" name="phone" placeholder="Phone Number" required>
-                    <textarea name="message" placeholder="How can we help you?" rows="5" required></textarea>
-                    <button type="submit" id="submitBtn" class="btn" style="width:100%; margin-top:15px;">Send Inquiry</button>
-                </form>
-                <div id="formMessage"></div>
+    <!-- Footer -->
+    <footer class="bg-black py-16 border-t border-zinc-800">
+        <div class="max-w-7xl mx-auto px-6 text-center text-zinc-400">
+            <p class="text-2xl font-medium text-white mb-3">HellaStore Owerri</p>
+            <p class="max-w-md mx-auto">Bringing the best of Douglas Market and modern shopping to your doorstep in Imo State.</p>
+            <div class="flex justify-center gap-6 mt-10 text-sm">
+                <a href="#" class="hover:text-white">Contact Us</a>
+                <a href="#" class="hover:text-white">Track Order</a>
+                <a href="#" class="hover:text-white">Terms</a>
             </div>
+            <p class="text-xs mt-12">©️ 2026 HellaStore • Owerri, Imo State, Nigeria</p>
         </div>
-    </section>
-
-    <footer style="background:var(--dark); color:white; padding:50px 20px; text-align:center;">
-        <p>©️ 2026 Buike POS • All Rights Reserved | Owerri, Imo State</p>
     </footer>
 
-    <!-- Live App Demo (Realistic Mobile App Feel) -->
-    <div id="appDemoModal" class="app-modal">
-        <div class="phone-frame">
-            <div class="phone-screen">
-                <div class="app-header">
-                    <i class="fas fa-arrow-left" onclick="closeAppDemo()" style="position:absolute;left:15px;cursor:pointer;"></i>
-                    Buike POS
-                </div>
-                <div class="app-balance">
-                    <p style="color:#64748b;">Available Balance</p>
-                    <h2 style="font-size:2.3rem;color:var(--success);">₦248,750</h2>
-                </div>
-
-                <!-- Main Screen -->
-                <div id="mainAppScreen">
-                    <div class="service-grid">
-                        <div class="service-card" onclick="showTransferScreen()">
-                            <i class="fas fa-exchange-alt" style="font-size:2.2rem;color:#4F46E5;margin-bottom:8px;"></i>
-                            <p>Transfer</p>
-                        </div>
-                        <div class="service-card" onclick="alert('✅ Withdrawal initiated (Demo)')">
-                            <i class="fas fa-money-bill-wave" style="font-size:2.2rem;color:var(--success);margin-bottom:8px;"></i>
-                            <p>Withdrawal</p>
-                        </div>
-                        <div class="service-card" onclick="alert('✅ Bill payment opened (Demo)')">
-                            <i class="fas fa-file-invoice" style="font-size:2.2rem;color:#F59E0B;margin-bottom:8px;"></i>
-                            <p>Pay Bills</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Transfer Screen -->
-                <div id="transferScreen" class="transfer-screen" style="display:none;">
-                    <h3 style="text-align:center;margin-bottom:20px;">Send Money</h3>
-                    <input type="text" id="recipient" value="Chinonso Okeke - 0123456789" placeholder="Recipient">
-                    <input type="number" id="transferAmount" value="15000" placeholder="Amount ₦">
-                    <textarea id="transferNote" rows="2" placeholder="Note">School fees</textarea>
-                    <button onclick="processTransfer()" class="btn" style="width:100%;margin-top:15px;background:var(--success);">
-                        Transfer ₦<span id="transferTotal">15000</span>
-                    </button>
-                    <button onclick="backToMainApp()" style="margin-top:10px;width:100%;background:#f1f5f9;color:#111827;border:none;padding:12px;border-radius:10px;">← Back</button>
-                </div>
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="hidden fixed inset-0 bg-black/80 flex items-end md:items-center justify-center z-[100]">
+        <div class="bg-zinc-900 w-full max-w-lg rounded-t-3xl md:rounded-3xl overflow-hidden">
+            <div class="px-6 py-5 border-b flex justify-between items-center">
+                <h3 class="text-2xl font-semibold">Your Cart</h3>
+                <button onclick="hideCart()" class="text-4xl text-zinc-400 hover:text-white">×</button>
             </div>
-        </div>
-    </div>
-
-    <!-- Login & Signup Modals -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModals()">×</span>
-            <h3 style="text-align:center;">Login to Buike POS</h3>
-            <input type="tel" id="loginPhone" placeholder="Phone Number">
-            <input type="password" id="loginPassword" placeholder="Password">
-            <button onclick="performLogin()" class="btn" style="width:100%;background:var(--primary);">Login</button>
-            <p style="text-align:center;margin-top:20px;">New? <a href="#" onclick="switchToSignup()">Create account</a></p>
-        </div>
-    </div>
-
-    <div id="signupModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModals()">×</span>
-            <h3 style="text-align:center;">Create Buike Agent Account</h3>
-            <input type="text" id="signupName" placeholder="Full Name">
-            <input type="tel" id="signupPhone" placeholder="Phone Number">
-            <input type="password" id="signupPassword" placeholder="Create Password">
-            <button onclick="performSignup()" class="btn" style="width:100%;background:var(--primary);">Create Account</button>
-            <p style="text-align:center;margin-top:20px;">Have account? <a href="#" onclick="switchToLogin()">Login</a></p>
+            <div id="cart-items" class="p-6 max-h-[420px] overflow-auto space-y-8"></div>
+            <div class="p-6 border-t border-zinc-800">
+                <div class="flex justify-between text-xl mb-6">
+                    <span class="font-medium">Total</span>
+                    <span id="cart-total" class="font-bold">₦0</span>
+                </div>
+                <button onclick="initiatePaystackPayment()" 
+                        class="w-full bg-emerald-600 hover:bg-emerald-500 py-7 text-xl font-semibold rounded-3xl transition">
+                    Pay with Paystack
+                </button>
+                <p class="text-center text-xs text-zinc-400 mt-6">Secure • Instant confirmation</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Mobile menu
-        document.getElementById('hamburger').addEventListener('click', () => {
-            document.getElementById('navLinks').classList.toggle('active');
-        });
-
-        // Calculator
-        function calculateCharges() {
-            let amount = parseFloat(document.getElementById('amount').value);
-            if (!amount || amount < 100) return alert("Minimum ₦100");
-            let charge = Math.ceil(amount / 5000) * 100;
-            document.getElementById('charge').textContent = `₦${charge}`;
-            document.getElementById('receive').textContent = `₦${(amount - charge).toLocaleString()}`;
-            document.getElementById('result').style.display = 'block';
-        }
-
-        // App Demo Functions
-        function openAppDemo() {
-            document.getElementById('appDemoModal').style.display = 'flex';
-            backToMainApp();
-        }
-        function closeAppDemo() {
-            document.getElementById('appDemoModal').style.display = 'none';
-        }
-        function showTransferScreen() {
-            document.getElementById('mainAppScreen').style.display = 'none';
-            document.getElementById('transferScreen').style.display = 'block';
-        }
-        function backToMainApp() {
-            document.getElementById('transferScreen').style.display = 'none';
-            document.getElementById('mainAppScreen').style.display = 'block';
-        }
-
-        function processTransfer() {
-            let amount = document.getElementById('transferAmount').value;
-            let btn = document.querySelector('#transferScreen button:first-of-type');
-            let original = btn.innerHTML;
-            btn.innerHTML = 'Processing... <i class="fas fa-spinner fa-spin"></i>';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.innerHTML = `✅ ₦${amount} transferred successfully!`;
-                setTimeout(() => {
-                    alert(`🎉 Transfer Successful!\nAmount: ₦${amount}\nRecipient: Chinonso Okeke\nNew Balance: ₦${248750 - parseInt(amount)}`);
-                    closeAppDemo();
-                    btn.innerHTML = original;
-                    btn.disabled = false;
-                    backToMainApp();
-                }, 1200);
-            }, 1600);
-        }
-
-        // Account System
-        function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
-        function showSignupModal() { document.getElementById('signupModal').style.display = 'flex'; }
-        function closeModals() {
-            document.getElementById('loginModal').style.display = 'none';
-            document.getElementById('signupModal').style.display = 'none';
-        }
-        function switchToSignup() { closeModals(); setTimeout(showSignupModal, 300); }
-        function switchToLogin() { closeModals(); setTimeout(showLoginModal, 300); }
-
-        function performSignup() {
-            let name = document.getElementById('signupName').value.trim();
-            let phone = document.getElementById('signupPhone').value.trim();
-            let pass = document.getElementById('signupPassword').value.trim();
-            if (!name || !phone || !pass) return alert("Please fill all fields");
-            localStorage.setItem('buike_user', JSON.stringify({name, phone, password: pass}));
-            alert(`✅ Welcome ${name}! Your Buike POS agent account is ready.`);
-            closeModals();
-            updateUserUI();
-        }
-
-        function performLogin() {
-            let phone = document.getElementById('loginPhone').value.trim();
-            let pass = document.getElementById('loginPassword').value.trim();
-            let stored = localStorage.getItem('buike_user');
-            if (!stored) return alert("Create an account first");
-            let user = JSON.parse(stored);
-            if (user.phone === phone && user.password === pass) {
-                alert(`✅ Welcome back, ${user.name}`);
-                closeModals();
-                updateUserUI();
-            } else alert("Incorrect phone or password");
-        }
-
-        function updateUserUI() {
-            let stored = localStorage.getItem('buike_user');
-            if (stored) {
-                let user = JSON.parse(stored);
-                document.getElementById('user-info').innerHTML = `Hi, ${user.name}`;
-                document.getElementById('user-info').style.display = 'block';
-                document.getElementById('logoutBtn').style.display = 'block';
+        // Products (realistic for Owerri / Nigeria market)
+        let products = [
+            {
+                id: 1,
+                name: "Sony WH-1000XM5 Noise Cancelling Headphones",
+                price: 285000,
+                image: "https://picsum.photos/id/1015/600/600",
+                description: "Premium sound with 30hr battery. Perfect for work or travel."
+            },
+            {
+                id: 2,
+                name: "Samsung Galaxy Buds 3 Pro",
+                price: 125000,
+                image: "https://picsum.photos/id/201/600/600",
+                description: "Crystal clear audio with active noise cancellation."
+            },
+            {
+                id: 3,
+                name: "Premium Ankara & Leather Handbag",
+                price: 28500,
+                image: "https://picsum.photos/id/870/600/600",
+                description: "Modern Nigerian fashion – stylish and durable."
+            },
+            {
+                id: 4,
+                name: "Organic Skincare Bundle (Shea Butter + Soap)",
+                price: 18500,
+                image: "https://picsum.photos/id/1016/600/600",
+                description: "Natural glow – popular in Owerri beauty routines."
+            },
+            {
+                id: 5,
+                name: "High-Speed Power Bank 20000mAh",
+                price: 18500,
+                image: "https://picsum.photos/id/160/600/600",
+                description: "Fast charging for phones and tablets."
             }
+        ]
+
+        let cart = []
+
+        function renderProducts() {
+            const grid = document.getElementById('products-grid')
+            grid.innerHTML = ''
+            products.forEach(product => {
+                const card = document.createElement('div')
+                card.className = 'product-card bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800'
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="w-full aspect-square object-cover">
+                    <div class="p-6">
+                        <h4 class="font-semibold text-lg mb-1 line-clamp-2">${product.name}</h4>
+                        <p class="text-zinc-400 text-sm mb-4 line-clamp-2">${product.description}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">₦${product.price.toLocaleString('en-NG')}</span>
+                            <button onclick="addToCart(${product.id})" 
+                                    class="bg-white text-black px-6 py-3 rounded-2xl font-medium hover:bg-emerald-400 hover:text-black transition">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `
+                grid.appendChild(card)
+            })
         }
 
-        function logout() {
-            if (confirm("Logout from Buike POS?")) {
-                localStorage.removeItem('buike_user');
-                document.getElementById('user-info').style.display = 'none';
-                document.getElementById('logoutBtn').style.display = 'none';
+        function addToCart(id) {
+            const product = products.find(p => p.id === id)
+            const existing = cart.find(item => item.id === id)
+            if (existing) {
+                existing.quantity = (existing.quantity || 1) + 1
+            } else {
+                cart.push({...product, quantity: 1})
             }
+            updateCartCount()
+            showToast(`${product.name} added to cart`)
         }
 
-        // Real Inquiry Form
-        const form = document.getElementById('inquiryForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const messageDiv = document.getElementById('formMessage');
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0)
+            document.getElementById('cart-count').textContent = count
+        }
 
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const original = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
+        function showCart() {
+            const modal = document.getElementById('cart-modal')
+            const container = document.getElementById('cart-items')
+            container.innerHTML = ''
 
-            const formData = new FormData(form);
-
-            try {
-                const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
-                if (res.ok) {
-                    messageDiv.innerHTML = '✅ Inquiry sent successfully! We will reply soon via WhatsApp or call.';
-                    messageDiv.style.color = '#22C55E';
-                    messageDiv.style.background = '#f0fdf4';
-                    form.reset();
-                } else throw new Error();
-            } catch {
-                messageDiv.innerHTML = '❌ Failed to send. Please WhatsApp us on 0916 814 4059';
-                messageDiv.style.color = '#ef4444';
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-center py-16 text-zinc-400">Your cart is empty. Start shopping!</p>`
+                document.getElementById('cart-total').textContent = '₦0'
+                modal.classList.remove('hidden')
+                return
             }
-            messageDiv.style.display = 'block';
-            submitBtn.textContent = original;
-            submitBtn.disabled = false;
-            setTimeout(() => messageDiv.style.display = 'none', 8000);
-        });
 
-        window.onload = updateUserUI;
+            let total = 0
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * (item.quantity || 1)
+                total += itemTotal
+                const row = document.createElement('div')
+                row.className = 'flex gap-4 border-b border-zinc-800 pb-6'
+                row.innerHTML = `
+                    <img src="${item.image}" class="w-20 h-20 object-cover rounded-2xl" alt="">
+                    <div class="flex-1">
+                        <p class="font-medium leading-tight">${item.name}</p>
+                        <p class="text-sm text-zinc-400">₦${item.price.toLocaleString('en-NG')}</p>
+                        <div class="flex justify-between mt-4">
+                            <div class="flex items-center gap-3">
+                                <button onclick="changeQty(${index}, -1)" class="w-7 h-7 border border-zinc-700 rounded-xl flex items-center justify-center">-</button>
+                                <span class="font-medium">${item.quantity || 1}</span>
+                                <button onclick="changeQty(${index}, 1)" class="w-7 h-7 border border-zinc-700 rounded-xl flex items-center justify-center">+</button>
+                            </div>
+                            <span class="font-bold">₦${itemTotal.toLocaleString('en-NG')}</span>
+                        </div>
+                    </div>
+                `
+                container.appendChild(row)
+            })
+
+            document.getElementById('cart-total').innerHTML = `₦${total.toLocaleString('en-NG')}`
+            modal.classList.remove('hidden')
+        }
+
+        function hideCart() {
+            document.getElementById('cart-modal').classList.add('hidden')
+        }
+
+        function changeQty(index, delta) {
+            const item = cart[index]
+            if (!item) return
+            item.quantity = Math.max(1, (item.quantity || 1) + delta)
+            showCart()
+            updateCartCount()
+        }
+
+        // Paystack Payment (replace with your real public key)
+        function initiatePaystackPayment() {
+            if (cart.length === 0) return
+            const total = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0)
+
+            hideCart()
+
+            const handler = PaystackPop.setup({
+                key: 'pk_test_your_public_key_here',   // ← CHANGE TO YOUR PAYSTACK PUBLIC KEY
+                email: 'osigwechibuike43@gmail.com',     // In real use, collect email from user
+                amount: total * 100,                   // in kobo
+                currency: 'NGN',
+                ref: 'HellaOwerri_' + Math.floor(Math.random() * 1000000000),
+                onSuccess: (response) => {
+                    alert(`Payment successful!\nReference: ${response.reference}\nThank you for shopping in Owerri!`)
+                    cart = []
+                    updateCartCount()
+                },
+                onClose: () => console.log('Payment closed')
+            })
+            handler.openIframe()
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div')
+            toast.style.cssText = `position:fixed; bottom:30px; left:30px; background:#10b981; color:#000; padding:16px 28px; border-radius:9999px; z-index:99999; box-shadow:0 10px 15px -3px rgb(16 185 129);`
+            toast.textContent = message
+            document.body.appendChild(toast)
+            setTimeout(() => toast.remove(), 2800)
+        }
+
+        // Initialize
+        window.onload = () => {
+            renderProducts()
+            updateCartCount()
+
+            // Load Paystack script
+            const script = document.createElement('script')
+            script.src = "https://js.paystack.co/v1/inline.js"
+            document.head.appendChild(script)
+        }
     </script>
 </body>
-</html
+</html>
