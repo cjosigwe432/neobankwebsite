@@ -425,12 +425,19 @@
         // Auto slide every 5 seconds
         setInterval(() => nextSlide(), 5000);
         
-        // Form Submission (fake)
-        document.getElementById('inquiryForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert("✅ Inquiry sent successfully! We'll reply via WhatsApp shortly.");
-            this.reset();
-        });
+        // Real Form Submission
+const form = document.getElementById('inquiryForm');
+
+form.addEventListener('submit', function() {
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    submitBtn.innerHTML = 'Sending Inquiry...';
+    submitBtn.disabled = true;
+    
+    // The form will submit naturally to Web3Forms
+    // You can add a custom thank you message if needed later
+});
         
         // Initialize everything
         window.onload = function() {
