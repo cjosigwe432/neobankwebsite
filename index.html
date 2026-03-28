@@ -1,522 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buike POS - Secure Financial Services | Owerri</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary: #1E40AF;   /* Deep professional blue */
-            --success: #22C55E;
-            --dark: #0F172A;
-            --accent: #3B82F6;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
-            color: #1e2937;
-            line-height: 1.6;
-        }
-        nav {
-            background: var(--dark);
-            color: white;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo { font-size: 2rem; font-weight: 700; color: white; text-decoration: none; }
-        .logo span { color: var(--success); }
-        .nav-links { display: flex; gap: 2.2rem; list-style: none; }
-        .nav-links a { color: white; text-decoration: none; font-weight: 500; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--success); }
-        .hamburger { display: none; font-size: 1.9rem; cursor: pointer; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeoBank UI</title>
 
-        .hero {
-            background: linear-gradient(135deg, var(--primary), #1E3A8A);
-            color: white;
-            padding: 200px 20px 140px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: url('https://picsum.photos/id/1015/2000/1200') center/cover;
-            opacity: 0.15;
-        }
-        .btn {
-            display: inline-block;
-            background: var(--success);
-            color: white;
-            padding: 15px 38px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            box-shadow: 0 10px 25px rgba(34,197,94,0.35);
-        }
-        .btn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(34,197,94,0.45); }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-        section { padding: 100px 20px; }
-        .container { max-width: 1280px; margin: 0 auto; }
-        h2 { text-align: center; font-size: 2.7rem; margin-bottom: 3.5rem; color: var(--dark); }
+body {
+  background: #f1f5f9;
+}
 
-        .card {
-            background: white;
-            border-radius: 24px;
-            padding: 35px 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            text-align: center;
-            transition: all 0.4s;
-            cursor: pointer;
-        }
-        .card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: white;
+  padding: 20px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
 
-        /* OTP & Modals */
-        .modal, .otp-modal, .app-modal {
-            display: none;
-            position: fixed;
-            z-index: 3000;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background: rgba(15,23,42,0.85);
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content, .otp-content, .phone-frame {
-            background: white;
-            padding: 40px;
-            border-radius: 24px;
-            width: 90%;
-            max-width: 440px;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.25);
-        }
-        .phone-frame {
-            width: 360px;
-            height: 700px;
-            background: #0F172A;
-            border-radius: 55px;
-            padding: 15px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-        }
-        .phone-screen {
-            height: 100%;
-            background: #F8FAFC;
-            border-radius: 42px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+.header h2 {
+  font-size: 18px;
+}
 
-        input, textarea {
-            width: 100%;
-            padding: 16px;
-            margin-bottom: 16px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1.02rem;
-        }
-        input:focus, textarea:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(30,64,175,0.15);
-        }
-        .otp-inputs { display: flex; gap: 12px; justify-content: center; margin: 25px 0; }
-        .otp-inputs input {
-            width: 52px;
-            height: 58px;
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
+.balance {
+  margin-top: 10px;
+  font-size: 28px;
+  font-weight: bold;
+}
 
-        #formMessage { padding: 14px; border-radius: 12px; margin-top: 15px; text-align: center; font-weight: 500; }
-    </style>
+/* ACTION BUTTONS */
+.actions {
+  margin: -30px 15px 15px;
+  background: white;
+  padding: 15px;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.action {
+  text-align: center;
+}
+
+.icon {
+  width: 45px;
+  height: 45px;
+  margin: auto;
+  border-radius: 12px;
+  background: #dcfce7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.action span {
+  font-size: 12px;
+}
+
+/* TRANSACTIONS */
+.section {
+  padding: 15px;
+}
+
+.section h3 {
+  margin-bottom: 10px;
+}
+
+.tx {
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.negative {
+  color: red;
+}
+
+.positive {
+  color: green;
+}
+
+/* BOTTOM NAV */
+.nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.nav div {
+  text-align: center;
+  font-size: 12px;
+}
+</style>
 </head>
+
 <body>
 
-    <!-- Navbar -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">Buike <span>POS</span></a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#" onclick="openAppDemo()">App Demo</a></li>
-                <li><a href="#calculator">Calculator</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div style="display:flex; align-items:center; gap:15px;">
-                <div id="user-info" style="color: var(--success); font-weight: 600; display: none;"></div>
-                <button id="logoutBtn" onclick="logout()" style="display:none; background:none; border:none; color:white; cursor:pointer; font-size:1.05rem;">Logout</button>
-                <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-            </div>
-        </div>
-    </nav>
+<!-- HEADER -->
+<div class="header">
+  <h2>Hello, User 👋</h2>
+  <div class="balance">₦<span id="balance">50,000</span></div>
+</div>
 
-    <!-- Hero -->
-    <section id="home" class="hero">
-        <div style="max-width: 900px; margin: 0 auto; position:relative; z-index:2;">
-            <h1 style="font-size:3.4rem;">Buike POS Owerri</h1>
-            <p style="font-size:1.4rem; margin:1.8rem 0;">Fast, Secure & Reliable Financial Services<br>for Agents & Customers in Imo State</p>
-            <div>
-                <button onclick="showSignupModal()" class="btn" style="margin:12px;">Create Agent Account</button>
-                <button onclick="openAppDemo()" class="btn" style="margin:12px; background:#1E40AF;">Try Live App Demo</button>
-            </div>
-        </div>
-    </section>
+<!-- ACTIONS -->
+<div class="actions">
+  <div class="action">
+    <div class="icon">💸</div>
+    <span>Send</span>
+  </div>
+  <div class="action">
+    <div class="icon">📱</div>
+    <span>Airtime</span>
+  </div>
+  <div class="action">
+    <div class="icon">🌐</div>
+    <span>Data</span>
+  </div>
+  <div class="action">
+    <div class="icon">💡</div>
+    <span>Bills</span>
+  </div>
+</div>
 
-    <!-- Services -->
-    <section id="services">
-        <div class="container">
-            <h2>Our Services</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px;">
-                <div class="card" onclick="openAppDemo()">
-                    <i class="fas fa-money-bill-wave" style="font-size: 3.2rem; color: var(--success); margin-bottom: 1.2rem;"></i>
-                    <h3>Cash Withdrawal</h3>
-                    <p>Instant cash with minimal fees</p>
-                </div>
-                <div class="card" onclick="openAppDemo()">
-                    <i class="fas fa-exchange-alt" style="font-size: 3.2rem; color: var(--primary); margin-bottom: 1.2rem;"></i>
-                    <h3>Money Transfer</h3>
-                    <p>To any bank account instantly</p>
-                </div>
-                <div class="card" onclick="openAppDemo()">
-                    <i class="fas fa-file-invoice" style="font-size: 3.2rem; color: #F59E0B; margin-bottom: 1.2rem;"></i>
-                    <h3>Bill Payments</h3>
-                    <p>Airtime, Electricity, Cable TV & more</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- TRANSACTIONS -->
+<div class="section">
+  <h3>Recent Transactions</h3>
+  <div id="txList"></div>
+</div>
 
-    <!-- App Promo -->
-    <section id="app-setup" style="background: linear-gradient(135deg, #0F172A, #1E40AF); color:white;">
-        <div class="container">
-            <h2 style="color:white;">Experience Buike POS App</h2>
-            <div style="text-align:center; max-width:700px; margin:0 auto;">
-                <p style="font-size:1.3rem; margin-bottom:30px;">Try the full interactive app experience directly on this website.</p>
-                <button onclick="openAppDemo()" class="btn" style="background:white; color:var(--dark); font-size:1.2rem; padding:18px 55px;">
-                    Open App Demo →
-                </button>
-            </div>
-        </div>
-    </section>
+<!-- NAVBAR -->
+<div class="nav">
+  <div>🏠<br>Home</div>
+  <div>📊<br>Finance</div>
+  <div>➕<br>Pay</div>
+  <div>👤<br>Me</div>
+</div>
 
-    <!-- Calculator -->
-    <section id="calculator">
-        <div class="container">
-            <h2>Calculate Your Charges</h2>
-            <div style="max-width:540px; margin:0 auto; background:white; padding:45px; border-radius:28px; box-shadow:0 20px 50px rgba(0,0,0,0.1);">
-                <label style="font-weight:600;">Enter Amount (₦)</label>
-                <input type="number" id="amount" placeholder="5000" min="100" style="font-size:1.1rem;">
-                <button onclick="calculateCharges()" class="btn" style="width:100%; margin-top:25px;">Calculate Charges</button>
-                <div id="result" style="margin-top:30px; display:none; background:#f0fdf4; padding:25px; border-radius:16px;">
-                    <p><strong>Charge:</strong> <span id="charge" style="font-size:1.2rem;"></span></p>
-                    <p><strong>You Receive:</strong> <span id="receive" style="color:var(--success); font-size:1.5rem; font-weight:700;"></span></p>
-                </div>
-            </div>
-        </div>
-    </section>
+<script>
+let balance = 50000;
 
-    <!-- Contact -->
-    <section id="contact">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <div style="max-width:640px; margin:0 auto; background:white; padding:45px; border-radius:28px; box-shadow:0 20px 50px rgba(0,0,0,0.1);">
-                <p style="font-size:1.35rem; text-align:center; margin-bottom:30px;">Call / WhatsApp: <strong>0916 814 4059</strong></p>
-                <form id="inquiryForm">
-                    <input type="hidden" name="access_key" value="2b23ab93-c4df-4bd1-a0c6-1f4cd33e5623><!--Replace with your real key from web3forms.com -->
-                    <input type="hidden" name="subject" value="New Inquiry - Buike POS Owerri">
-                    <input type="text" name="name" placeholder="Full Name" required>
-                    <input type="tel" name="phone" placeholder="Phone Number" required>
-                    <textarea name="message" placeholder="How can we help you?" rows="5" required></textarea>
-                    <button type="submit" id="submitBtn" class="btn" style="width:100%; margin-top:20px;">Send Message</button>
-                </form>
-                <div id="formMessage"></div>
-            </div>
-        </div>
-    </section>
+function addTransaction(name, amount, type) {
+  const tx = document.createElement("div");
+  tx.className = "tx";
+  tx.innerHTML = `
+    <span>${name}</span>
+    <span class="${type}">${type === "negative" ? "-" : "+"}₦${amount}</span>
+  `;
+  document.getElementById("txList").prepend(tx);
+}
 
-    <footer style="background:var(--dark); color:white; padding:60px 20px; text-align:center;">
-        <p>©️ 2026 Buike POS • All Rights Reserved | Owerri, Imo State</p>
-    </footer>
+// Demo transactions
+addTransaction("Airtime Purchase", 1000, "negative");
+addTransaction("Transfer Received", 5000, "positive");
+</script>
 
-    <!-- Signup Modal -->
-    <div id="signupModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModals()">×</span>
-            <h3 style="text-align:center; margin-bottom:25px;">Create Buike Agent Account</h3>
-            <input type="text" id="signupName" placeholder="Full Name" required>
-            <input type="tel" id="signupPhone" placeholder="Phone Number (e.g. 09168144059)" required>
-            <input type="password" id="signupPassword" placeholder="Create Password" required>
-            <button onclick="startSignup()" class="btn" style="width:100%; background:var(--primary);">Continue →</button>
-        </div>
-    </div>
-
-    <!-- OTP Verification Modal -->
-    <div id="otpModal" class="otp-modal">
-        <div class="otp-content">
-            <span class="close" onclick="closeOTPModal()">×</span>
-            <h3 style="text-align:center;">Verify Your Phone</h3>
-            <p style="text-align:center; margin:15px 0 25px; color:var(--gray);">We sent a 4-digit code to <strong id="sentPhone"></strong></p>
-            <div class="otp-inputs">
-                <input type="text" maxlength="1" id="otp1" onkeyup="moveToNext(this, 'otp2')">
-                <input type="text" maxlength="1" id="otp2" onkeyup="moveToNext(this, 'otp3')">
-                <input type="text" maxlength="1" id="otp3" onkeyup="moveToNext(this, 'otp4')">
-                <input type="text" maxlength="1" id="otp4" onkeyup="verifyOTP()">
-            </div>
-            <button onclick="verifyOTP()" class="btn" style="width:100%; margin-top:20px;">Verify Code</button>
-            <p style="text-align:center; margin-top:20px; font-size:0.95rem; color:var(--gray);">Didn't receive code? <span onclick="resendOTP()" style="color:var(--primary); cursor:pointer;">Resend</span></p>
-        </div>
-    </div>
-
-    <!-- App Demo Modal -->
-    <div id="appDemoModal" class="app-modal">
-        <div class="phone-frame">
-            <div class="phone-screen">
-                <div class="app-header">
-                    <i class="fas fa-arrow-left" onclick="closeAppDemo()" style="position:absolute; left:18px; cursor:pointer;"></i>
-                    Buike POS
-                </div>
-                <div class="app-balance">
-                    <p style="color:#94a3b8;">Available Balance</p>
-                    <h2 style="font-size:2.4rem; color:var(--success);">₦248,750</h2>
-                </div>
-
-                <div id="mainAppScreen">
-                    <div class="service-grid">
-                        <div class="service-card" onclick="showTransferScreen()">
-                            <i class="fas fa-exchange-alt" style="font-size:2.3rem; color:var(--primary);"></i>
-                            <p style="margin-top:8px; font-weight:600;">Transfer</p>
-                        </div>
-                        <div class="service-card" onclick="alert('Withdrawal started (Demo)')">
-                            <i class="fas fa-money-bill-wave" style="font-size:2.3rem; color:var(--success);"></i>
-                            <p style="margin-top:8px; font-weight:600;">Withdraw</p>
-                        </div>
-                        <div class="service-card" onclick="alert('Bill payment opened (Demo)')">
-                            <i class="fas fa-file-invoice" style="font-size:2.3rem; color:#F59E0B;"></i>
-                            <p style="margin-top:8px; font-weight:600;">Pay Bills</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Transfer Screen -->
-                <div id="transferScreen" style="display:none; padding:25px; background:white; height:100%;">
-                    <h3 style="text-align:center; margin-bottom:25px;">Send Money</h3>
-                    <input type="text" id="recipient" value="Chinonso Okeke - 0123456789">
-                    <input type="number" id="transferAmount" value="15000" placeholder="Amount (₦)">
-                    <textarea id="transferNote" rows="2" placeholder="Note">School fees</textarea>
-                    <button onclick="processTransfer()" class="btn" style="width:100%; margin-top:20px; background:var(--success);">Transfer Now</button>
-                    <button onclick="backToMainApp()" style="margin-top:12px; width:100%; background:#f1f5f9; color:#0f172a; border:none; padding:14px; border-radius:12px;">← Back</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Mobile menu
-        document.getElementById('hamburger').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('active'));
-
-        // Calculator
-        function calculateCharges() {
-            let amt = parseFloat(document.getElementById('amount').value);
-            if (!amt || amt < 100) return alert("Minimum amount is ₦100");
-            let charge = Math.ceil(amt / 5000) * 100;
-            document.getElementById('charge').textContent = `₦${charge}`;
-            document.getElementById('receive').textContent = `₦${(amt - charge).toLocaleString()}`;
-            document.getElementById('result').style.display = 'block';
-        }
-
-        // Signup Flow with OTP Simulation
-        let currentUser = null;
-        let tempPhone = "";
-
-        function showSignupModal() {
-            document.getElementById('signupModal').style.display = 'flex';
-        }
-
-        function closeModals() {
-            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        }
-
-        function startSignup() {
-            let name = document.getElementById('signupName').value.trim();
-            let phone = document.getElementById('signupPhone').value.trim();
-            let pass = document.getElementById('signupPassword').value.trim();
-
-            if (!name || !phone || !pass) return alert("Please fill all fields");
-
-            tempPhone = phone;
-            currentUser = { name, phone, password: pass };
-
-            closeModals();
-            document.getElementById('sentPhone').textContent = phone;
-            document.getElementById('otpModal').style.display = 'flex';
-
-            // Auto-focus first OTP input
-            setTimeout(() => document.getElementById('otp1').focus(), 400);
-        }
-
-        function moveToNext(current, nextId) {
-            if (current.value.length === 1) {
-                document.getElementById(nextId).focus();
-            }
-        }
-
-        function verifyOTP() {
-            let code = document.getElementById('otp1').value + document.getElementById('otp2').value +
-                       document.getElementById('otp3').value + document.getElementById('otp4').value;
-
-            if (code.length === 4) {
-                // Simulate success (in real app this would call SMS API)
-                alert(`✅ Phone ${tempPhone} verified successfully!`);
-                localStorage.setItem('buike_user', JSON.stringify(currentUser));
-                closeOTPModal();
-                updateUserUI();
-            } else {
-                alert("Please enter the 4-digit code (try 1234 for demo)");
-            }
-        }
-
-        function resendOTP() {
-            alert("✅ New verification code sent to " + tempPhone + " (Demo)");
-        }
-
-        function closeOTPModal() {
-            document.getElementById('otpModal').style.display = 'none';
-        }
-
-        // Login
-        function showLoginModal() {
-            document.getElementById('loginModal').style.display = 'flex';
-        }
-
-        function performLogin() {
-            let phone = document.getElementById('loginPhone').value.trim();
-            let pass = document.getElementById('loginPassword').value.trim();
-            let stored = localStorage.getItem('buike_user');
-
-            if (!stored) return alert("No account found. Create one first.");
-
-            let user = JSON.parse(stored);
-            if (user.phone === phone && user.password === pass) {
-                alert(`✅ Welcome back, ${user.name}!`);
-                closeModals();
-                updateUserUI();
-            } else {
-                alert("Incorrect phone or password");
-            }
-        }
-
-        function updateUserUI() {
-            let stored = localStorage.getItem('buike_user');
-            if (stored) {
-                let user = JSON.parse(stored);
-                document.getElementById('user-info').innerHTML = `Hi, ${user.name}`;
-                document.getElementById('user-info').style.display = 'block';
-                document.getElementById('logoutBtn').style.display = 'block';
-            }
-        }
-
-        function logout() {
-            if (confirm("Logout from Buike POS?")) {
-                localStorage.removeItem('buike_user');
-                document.getElementById('user-info').style.display = 'none';
-                document.getElementById('logoutBtn').style.display = 'none';
-            }
-        }
-
-        // App Demo
-        function openAppDemo() {
-            document.getElementById('appDemoModal').style.display = 'flex';
-            backToMainApp();
-        }
-
-        function closeAppDemo() {
-            document.getElementById('appDemoModal').style.display = 'none';
-        }
-
-        function showTransferScreen() {
-            document.getElementById('mainAppScreen').style.display = 'none';
-            document.getElementById('transferScreen').style.display = 'block';
-        }
-
-        function backToMainApp() {
-            document.getElementById('transferScreen').style.display = 'none';
-            document.getElementById('mainAppScreen').style.display = 'block';
-        }
-
-        function processTransfer() {
-            let amount = document.getElementById('transferAmount').value || 15000;
-            let btn = document.querySelector('#transferScreen button');
-            let original = btn.textContent;
-
-            btn.innerHTML = `Processing ₦${amount} <i class="fas fa-spinner fa-spin"></i>`;
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.innerHTML = `✅ ₦${amount} sent successfully!`;
-                setTimeout(() => {
-                    alert(`🎉 Transfer Completed!\nAmount: ₦${amount}\nStatus: Successful`);
-                    closeAppDemo();
-                    btn.innerHTML = original;
-                    btn.disabled = false;
-                    backToMainApp();
-                }, 1000);
-            }, 1600);
-        }
-
-        // Real Inquiry Form
-        const form = document.getElementById('inquiryForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const messageDiv = document.getElementById('formMessage');
-
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const original = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-
-            const formData = new FormData(form);
-
-            try {
-                const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
-                if (res.ok) {
-                    messageDiv.innerHTML = '✅ Your message has been sent successfully!<br>We will reply shortly via WhatsApp.';
-                    messageDiv.style.color = '#22C55E';
-                    messageDiv.style.background = '#f0fdf4';
-                    form.reset();
-                } else throw new Error();
-            } catch {
-                messageDiv.innerHTML = '❌ Could not send. Please WhatsApp us on 0916 814 4059';
-                messageDiv.style.color = '#ef4444';
-            }
-            messageDiv.style.display = 'block';
-            submitBtn.textContent = original;
-            submitBtn.disabled = false;
-            setTimeout(() => messageDiv.style.display = 'none', 8000);
-        });
-
-        // Initialize
-        window.onload = updateUserUI;
-    </script>
 </body>
 </html>
