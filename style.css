@@ -1,9 +1,22 @@
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #f5f7fa;
+  font-family: Arial;
+  background: #111;
 }
 
+/* BACKGROUND IMAGE */
+#bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url("https://images.pexels.com/photos/4386371/pexels-photo-4386371.jpeg");
+  background-size: cover;
+  filter: blur(10px);
+  opacity: 0.25;
+  z-index: -1;
+}
+
+/* CENTER APP */
 .container {
   display: flex;
   justify-content: center;
@@ -11,71 +24,72 @@ body {
   height: 100vh;
 }
 
-/* AUTH */
-.auth-box {
+/* LOGIN CARD */
+.card {
   background: white;
-  padding: 30px;
-  border-radius: 12px;
+  padding: 25px;
   width: 320px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  border-radius: 12px;
 }
 
-.auth-box input {
+.card input {
   width: 100%;
-  margin: 8px 0;
-  padding: 12px;
+  padding: 10px;
+  margin: 6px 0;
 }
 
-.auth-box button {
+button {
   width: 100%;
-  padding: 12px;
-  margin-top: 5px;
+  padding: 10px;
   background: #008060;
   color: white;
   border: none;
+  margin-top: 5px;
 }
 
 /* DASHBOARD */
 .dashboard {
   display: none;
   width: 350px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
 }
 
-.top-bar {
+/* TOP BAR */
+.top {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+#avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+/* BALANCE CARD */
 .balance-card {
-  background: linear-gradient(135deg, #008060, #00a67d);
+  background: linear-gradient(135deg, #008060, #00b37a);
   color: white;
-  padding: 20px;
-  border-radius: 12px;
-  margin: 15px 0;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px 0;
 }
 
-.actions input {
+/* CARD IMAGE */
+#cardImage {
   width: 100%;
-  margin: 5px 0;
-  padding: 12px;
+  border-radius: 10px;
+  margin: 10px 0;
 }
 
-.actions button {
-  width: 100%;
-  padding: 12px;
-  background: #008060;
-  color: white;
-  border: none;
-}
-
-.transactions {
-  margin-top: 15px;
-}
-
+/* TRANSACTIONS */
 .transactions li {
-  background: white;
+  list-style: none;
+  padding: 8px;
+  background: #f4f4f4;
   margin: 5px 0;
-  padding: 10px;
   border-radius: 6px;
 }
