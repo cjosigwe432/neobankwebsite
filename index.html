@@ -120,6 +120,46 @@ function clearAll() {
 // ⭐⭐⭐ REAL MATH SOLVER ⭐⭐⭐
 function solveExpression(expr) {
 
+    // STEP 1: Solve brackets first (recursive)
+    while (expr.includes("(")) {
+        expr = expr.replace(/\(([^()]+)\)/g, (match, inner) => {
+            return solveExpression(inner);
+        });
+    }
+
+    // STEP 2: Split numbers & operators
+    let numbers = expr.split(/[\+\-\*\/]/).map(Number);
+    let operators = expr.match(/[\+\-\*\/]/g);
+
+    if (!operators) return numbers[0];
+
+    // STEP 3: Handle × and ÷
+    for (let i = 0; i < operators.length; i++) {
+        if (operators[i] === "*" || operators[i] === "/") {
+            let result;
+
+            if (operators[i] === "*") {
+                result = numbers[i] * numbers[i + 1];
+            } else {
+                if (numbers[i + 1] === 0) return "Error";
+                result = numbers[i] / numbers[i + 1];
+            }
+
+            numbers.splice(i, 2, result);
+            operators.splice(i, 1);
+            i--;
+        }
+    }
+
+    // STEP 4: Handle + and -
+    let result = numbers[0];
+    for (let i = 0; i < operators.length; i++) {
+        if (operators[i] === "+") result += numbers[i + 1];
+        if (operators[i] === "-") result -= numbers[i + 1];
+    }
+
+    return result;
+}
     // Step 1: Split numbers and operators
     let numbers = expr.split(/[\+\-\*\/]/).map(Number);
     let operators = expr.match(/[\+\-\*\/]/g);
