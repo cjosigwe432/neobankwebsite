@@ -3,68 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>iPhone Calculator Pro</title>
+<title>Real Calculator</title>
 
 <style>
 body {
     margin: 0;
-    background: #000;
+    background: black;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .calculator {
     width: 320px;
-    background: #000;
 }
 
 .display {
-    color: #fff;
+    color: white;
     font-size: 60px;
     text-align: right;
     padding: 20px;
-    min-height: 80px;
-    overflow: hidden;
 }
 
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    gap: 10px;
     padding: 10px;
 }
 
 button {
     height: 70px;
-    font-size: 26px;
-    border: none;
     border-radius: 50%;
-    cursor: pointer;
-    transition: 0.15s;
+    border: none;
+    font-size: 24px;
 }
 
-button:active {
-    transform: scale(0.9);
-    opacity: 0.7;
-}
-
-.gray { background: #a5a5a5; color: #000; }
-.dark { background: #333; color: #fff; }
-.orange { background: #ff9500; color: #fff; }
-
-.active-op {
-    background: #fff !important;
-    color: #ff9500 !important;
-}
+.gray { background: #a5a5a5; }
+.dark { background: #333; color: white; }
+.orange { background: #ff9500; color: white; }
 
 .zero {
     grid-column: span 2;
     border-radius: 40px;
-    text-align: left;
-    padding-left: 25px;
 }
 </style>
 </head>
@@ -78,115 +60,122 @@ button:active {
         <button class="gray" onclick="clearAll()">AC</button>
         <button class="gray" onclick="toggleSign()">±</button>
         <button class="gray" onclick="percent()">%</button>
-        <button class="orange" onclick="chooseOp('/')">÷</button>
+        <button class="orange" onclick="setOperator('/')">÷</button>
 
-        <button class="dark" onclick="inputNum('7')">7</button>
-        <button class="dark" onclick="inputNum('8')">8</button>
-        <button class="dark" onclick="inputNum('9')">9</button>
-        <button class="orange" onclick="chooseOp('*')">×</button>
+        <button class="dark" onclick="press(7)">7</button>
+        <button class="dark" onclick="press(8)">8</button>
+        <button class="dark" onclick="press(9)">9</button>
+        <button class="orange" onclick="setOperator('*')">×</button>
 
-        <button class="dark" onclick="inputNum('4')">4</button>
-        <button class="dark" onclick="inputNum('5')">5</button>
-        <button class="dark" onclick="inputNum('6')">6</button>
-        <button class="orange" onclick="chooseOp('-')">−</button>
+        <button class="dark" onclick="press(4)">4</button>
+        <button class="dark" onclick="press(5)">5</button>
+        <button class="dark" onclick="press(6)">6</button>
+        <button class="orange" onclick="setOperator('-')">−</button>
 
-        <button class="dark" onclick="inputNum('1')">1</button>
-        <button class="dark" onclick="inputNum('2')">2</button>
-        <button class="dark" onclick="inputNum('3')">3</button>
-        <button class="orange" onclick="chooseOp('+')">+</button>
+        <button class="dark" onclick="press(1)">1</button>
+        <button class="dark" onclick="press(2)">2</button>
+        <button class="dark" onclick="press(3)">3</button>
+        <button class="orange" onclick="setOperator('+')">+</button>
 
-        <button class="dark zero" onclick="inputNum('0')">0</button>
-        <button class="dark" onclick="inputDecimal()">.</button>
-        <button class="orange" onclick="compute()">=</button>
+        <button class="dark zero" onclick="press(0)">0</button>
+        <button class="dark" onclick="dot()">.</button>
+        <button class="orange" onclick="equal()">=</button>
     </div>
 </div>
 
 <script>
-let current = "0";
-let previous = "";
-let operator = null;
+let display = document.getElementById("display");
 
-const display = document.getElementById("display");
+// STATE (this is very important)
+let current = "0";     // number you are typing
+let previous = null;   // stored number
+let operator = null;   // + - * /
+let resetNext = false; // when to reset screen
 
+// UPDATE SCREEN
 function updateDisplay() {
-    display.innerText = formatNumber(current);
+    display.innerText = current;
 }
 
-function formatNumber(num) {
-    let [int, dec] = num.split(".");
-    int = Number(int).toLocaleString();
-    return dec ? int + "." + dec : int;
-}
-
-function inputNum(num) {
-    if (current === "0") current = num;
-    else current += num;
-    updateDisplay();
-}
-
-function inputDecimal() {
-    if (!current.includes(".")) {
-        current += ".";
+// NUMBER CLICK
+function press(num) {
+    if (current === "0" || resetNext) {
+        current = num.toString();
+        resetNext = false;
+    } else {
+        current += num;
     }
     updateDisplay();
 }
 
+// DOT
+function dot() {
+    if (!current.includes(".")) {
+        current += ".";
+        updateDisplay();
+    }
+}
+
+// SET OPERATOR (+ - × ÷)
+function setOperator(op) {
+    if (operator !== null) calculate(); // solve previous first
+
+    previous = parseFloat(current);
+    operator = op;
+    resetNext = true;
+}
+
+// ⭐⭐⭐ THIS IS THE REAL "SOLVE MATH" CODE ⭐⭐⭐
+function calculate() {
+    if (operator === null || previous === null) return;
+
+    let currentNumber = parseFloat(current);
+    let result;
+
+    if (operator === "+") result = previous + currentNumber;
+    if (operator === "-") result = previous - currentNumber;
+    if (operator === "*") result = previous * currentNumber;
+    if (operator === "/") {
+        if (currentNumber === 0) {
+            current = "Error";
+            updateDisplay();
+            return;
+        }
+        result = previous / currentNumber;
+    }
+
+    current = result.toString();
+    operator = null;
+    previous = null;
+    resetNext = true;
+
+    updateDisplay();
+}
+
+// EQUAL BUTTON
+function equal() {
+    calculate();
+}
+
+// CLEAR
 function clearAll() {
     current = "0";
-    previous = "";
+    previous = null;
     operator = null;
     updateDisplay();
 }
 
+// PLUS/MINUS
 function toggleSign() {
     current = (parseFloat(current) * -1).toString();
     updateDisplay();
 }
 
+// PERCENT
 function percent() {
     current = (parseFloat(current) / 100).toString();
     updateDisplay();
 }
-
-function chooseOp(op) {
-    if (operator !== null) compute();
-    operator = op;
-    previous = current;
-    current = "0";
-}
-
-function compute() {
-    let result;
-    const prev = parseFloat(previous);
-    const curr = parseFloat(current);
-
-    if (isNaN(prev) || isNaN(curr)) return;
-
-    switch (operator) {
-        case "+": result = prev + curr; break;
-        case "-": result = prev - curr; break;
-        case "*": result = prev * curr; break;
-        case "/": result = curr === 0 ? "Error" : prev / curr; break;
-        default: return;
-    }
-
-    current = result.toString();
-    operator = null;
-    previous = "";
-    updateDisplay();
-}
-
-// Keyboard Support
-document.addEventListener("keydown", (e) => {
-    if (!isNaN(e.key)) inputNum(e.key);
-    if (e.key === ".") inputDecimal();
-    if (["+", "-", "*", "/"].includes(e.key)) chooseOp(e.key);
-    if (e.key === "Enter") compute();
-    if (e.key === "Backspace") {
-        current = current.slice(0, -1) || "0";
-        updateDisplay();
-    }
-});
 </script>
 
 </body>
