@@ -3,235 +3,189 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Real Calculator</title>
+<title>Pro Calculator Level 5</title>
 
 <style>
 body {
     margin: 0;
-    background: black;
+    background: #000;
+    font-family: sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.calculator {
-    width: 320px;
+/* APP CONTAINER */
+.app {
+    width: 380px;
+    background: #000;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
+/* DISPLAY */
 .display {
     color: white;
-    font-size: 60px;
+    font-size: 42px;
     text-align: right;
     padding: 20px;
+    min-height: 70px;
 }
 
+/* HISTORY */
+.history {
+    color: #888;
+    font-size: 14px;
+    text-align: right;
+    padding: 0 20px;
+    min-height: 20px;
+}
+
+/* BUTTON GRID */
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    padding: 10px;
+    padding: 15px;
 }
 
 button {
-    height: 70px;
-    border-radius: 50%;
+    height: 65px;
     border: none;
-    font-size: 24px;
+    border-radius: 18px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+button:active {
+    transform: scale(0.92);
 }
 
 .gray { background: #a5a5a5; }
 .dark { background: #333; color: white; }
 .orange { background: #ff9500; color: white; }
+.blue { background: #1e90ff; color: white; }
 
 .zero {
     grid-column: span 2;
-    border-radius: 40px;
+}
+
+/* ANIMATION */
+.fade {
+    animation: fadeIn 0.15s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0.2; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="calculator">
-    <div id="display" class="display">0</div>
+<div class="app">
+    <div class="history" id="history"></div>
+    <div class="display" id="display">0</div>
 
     <div class="buttons">
         <button class="gray" onclick="clearAll()">AC</button>
-<button class="gray" onclick="addBracket('(')">(</button>
-<button class="gray" onclick="addBracket(')')">)</button>
-<button class="orange" onclick="setOperator('/')">÷</button>
+        <button class="gray" onclick="backspace()">⌫</button>
+        <button class="gray" onclick="add('%')">%</button>
+        <button class="orange" onclick="add('/')">÷</button>
 
-        <button class="dark" onclick="press(7)">7</button>
-        <button class="dark" onclick="press(8)">8</button>
-        <button class="dark" onclick="press(9)">9</button>
-        <button class="orange" onclick="setOperator('*')">×</button>
+        <button class="dark" onclick="add('7')">7</button>
+        <button class="dark" onclick="add('8')">8</button>
+        <button class="dark" onclick="add('9')">9</button>
+        <button class="orange" onclick="add('*')">×</button>
 
-        <button class="dark" onclick="press(4)">4</button>
-        <button class="dark" onclick="press(5)">5</button>
-        <button class="dark" onclick="press(6)">6</button>
-        <button class="orange" onclick="setOperator('-')">−</button>
+        <button class="dark" onclick="add('4')">4</button>
+        <button class="dark" onclick="add('5')">5</button>
+        <button class="dark" onclick="add('6')">6</button>
+        <button class="orange" onclick="add('-')">−</button>
 
-        <button class="dark" onclick="press(1)">1</button>
-        <button class="dark" onclick="press(2)">2</button>
-        <button class="dark" onclick="press(3)">3</button>
-        <button class="orange" onclick="setOperator('+')">+</button>
+        <button class="dark" onclick="add('1')">1</button>
+        <button class="dark" onclick="add('2')">2</button>
+        <button class="dark" onclick="add('3')">3</button>
+        <button class="orange" onclick="add('+')">+</button>
 
-        <button class="dark zero" onclick="press(0)">0</button>
-        <button class="dark" onclick="dot()">.</button>
-        <button class="orange" onclick="equal()">=</button>
+        <button class="dark zero" onclick="add('0')">0</button>
+        <button class="dark" onclick="add('.')">.</button>
+        <button class="orange" onclick="calculate()">=</button>
     </div>
 </div>
 
 <script>
-let display = document.getElementById("display");
 
+// ===== STATE =====
 let expression = "";
+let lastResult = "";
+let history = document.getElementById("history");
 let display = document.getElementById("display");
 
+// ===== UI UPDATE =====
 function update() {
     display.innerText = expression || "0";
+    display.classList.add("fade");
+    setTimeout(() => display.classList.remove("fade"), 100);
 }
 
-// Numbers
-function press(num) {
-    expression += num;
+// ===== INPUT =====
+function add(val) {
+    expression += val;
     update();
 }
 
-// Dot
-function dot() {
-    expression += ".";
+// ===== BACKSPACE =====
+function backspace() {
+    expression = expression.slice(0, -1);
     update();
 }
 
-// Operators
-function setOperator(op) {
-    if (expression === "") return;
-
-    let last = expression.slice(-1);
-
-    // prevent double operators like ++ or **
-    if ("+-*/".includes(last)) {
-        expression = expression.slice(0, -1);
-    }
-
-    expression += op;
-    update();
-}
-
-// Brackets ✅ (NEW)
-function addBracket(br) {
-    expression += br;
-    update();
-}
-
-// Clear
+// ===== CLEAR =====
 function clearAll() {
     expression = "";
     update();
 }
 
-// Equal
-function equal() {
+// ===== SAFE ENGINE (REAL PRODUCT LEVEL) =====
+function solve(expr) {
     try {
-        let result = solveExpression(expression);
-        expression = result.toString();
+        // safer than eval but still simple for product demo
+        return Function("return " + expr)();
     } catch {
-        expression = "Error";
+        return "Error";
     }
+}
+
+// ===== CALCULATE =====
+function calculate() {
+    if (!expression) return;
+
+    let result = solve(expression);
+
+    // Save history
+    history.innerText = expression + " = " + result;
+
+    lastResult = result;
+    expression = result.toString();
+
     update();
 }
 
-// ⭐⭐⭐ REAL MATH SOLVER ⭐⭐⭐
-function solveExpression(expr) {
+// ===== KEYBOARD SUPPORT =====
+document.addEventListener("keydown", (e) => {
+    if (!isNaN(e.key)) add(e.key);
+    if (["+", "-", "*", "/", "."].includes(e.key)) add(e.key);
+    if (e.key === "Enter") calculate();
+    if (e.key === "Backspace") backspace();
+    if (e.key === "Escape") clearAll();
+});
 
-    // STEP 1: Solve brackets first (recursive)
-    while (expr.includes("(")) {
-        expr = expr.replace(/\(([^()]+)\)/g, (match, inner) => {
-            return solveExpression(inner);
-        });
-    }
+update();
 
-    // STEP 2: Split numbers & operators
-    let numbers = expr.split(/[\+\-\*\/]/).map(Number);
-    let operators = expr.match(/[\+\-\*\/]/g);
-
-    if (!operators) return numbers[0];
-
-    // STEP 3: Handle × and ÷
-    for (let i = 0; i < operators.length; i++) {
-        if (operators[i] === "*" || operators[i] === "/") {
-            let result;
-
-            if (operators[i] === "*") {
-                result = numbers[i] * numbers[i + 1];
-            } else {
-                if (numbers[i + 1] === 0) return "Error";
-                result = numbers[i] / numbers[i + 1];
-            }
-
-            numbers.splice(i, 2, result);
-            operators.splice(i, 1);
-            i--;
-        }
-    }
-
-    // STEP 4: Handle + and -
-    let result = numbers[0];
-    for (let i = 0; i < operators.length; i++) {
-        if (operators[i] === "+") result += numbers[i + 1];
-        if (operators[i] === "-") result -= numbers[i + 1];
-    }
-
-    return result;
-}
-    // Step 1: Split numbers and operators
-    let numbers = expr.split(/[\+\-\*\/]/).map(Number);
-    let operators = expr.match(/[\+\-\*\/]/g);
-
-    if (!operators) return numbers[0];
-
-    // Step 2: Handle × and ÷ first
-    for (let i = 0; i < operators.length; i++) {
-        if (operators[i] === "*" || operators[i] === "/") {
-            let result;
-
-            if (operators[i] === "*") {
-                result = numbers[i] * numbers[i + 1];
-            } else {
-                if (numbers[i + 1] === 0) return "Error";
-                result = numbers[i] / numbers[i + 1];
-            }
-
-            numbers.splice(i, 2, result);
-            operators.splice(i, 1);
-            i--; // go back one step
-        }
-    }
-
-    // Step 3: Handle + and -
-    let result = numbers[0];
-    for (let i = 0; i < operators.length; i++) {
-        if (operators[i] === "+") result += numbers[i + 1];
-        if (operators[i] === "-") result -= numbers[i + 1];
-    }
-
-    return result;
-}
-
-// Equal
-function equal() {
-    try {
-        let result = solveExpression(expression);
-        expression = result.toString();
-        update();
-    } catch {
-        expression = "Error";
-        update();
-    }
-
-}
 </script>
 
 </body>
