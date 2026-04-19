@@ -2,21 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Full Pro Calculator</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pro Calculator Level 5</title>
 
 <style>
 body {
     margin: 0;
     background: #000;
-    font-family: sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    font-family: sans-serif;
 }
 
-/* APP CONTAINER */
 .app {
     width: 380px;
     background: #000;
@@ -24,25 +23,22 @@ body {
     overflow: hidden;
 }
 
-/* DISPLAY */
-.display {
-    color: white;
-    font-size: 42px;
-    text-align: right;
-    padding: 20px;
-    min-height: 70px;
-}
-
-/* HISTORY */
 .history {
     color: #888;
-    font-size: 14px;
     text-align: right;
-    padding: 0 20px;
+    padding: 10px 20px 0;
+    font-size: 14px;
     min-height: 20px;
 }
 
-/* BUTTON GRID */
+.display {
+    color: #fff;
+    text-align: right;
+    padding: 20px;
+    font-size: 42px;
+    min-height: 60px;
+}
+
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -53,33 +49,18 @@ body {
 button {
     height: 65px;
     border: none;
-    border-radius: 18px;
-    font-size: 20px;
+    border-radius: 15px;
+    font-size: 18px;
     cursor: pointer;
-    transition: 0.15s;
 }
 
-button:active {
-    transform: scale(0.92);
-}
-
-.gray { background: #a5a5a5; }
 .dark { background: #333; color: white; }
+.gray { background: #a5a5a5; }
 .orange { background: #ff9500; color: white; }
 .blue { background: #1e90ff; color: white; }
 
 .zero {
     grid-column: span 2;
-}
-
-/* ANIMATION */
-.fade {
-    animation: fadeIn 0.15s ease-in;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0.2; transform: scale(0.98); }
-    to { opacity: 1; transform: scale(1); }
 }
 </style>
 </head>
@@ -92,8 +73,8 @@ button:active {
 
     <div class="buttons">
         <button class="gray" onclick="clearAll()">AC</button>
-        <button class="gray" onclick="backspace()">⌫</button>
-        <button class="gray" onclick="add('%')">%</button>
+        <button class="gray" onclick="back()">⌫</button>
+        <button class="gray" onclick="add('(')">(</button>
         <button class="orange" onclick="add('/')">÷</button>
 
         <button class="dark" onclick="add('7')">7</button>
@@ -113,78 +94,142 @@ button:active {
 
         <button class="dark zero" onclick="add('0')">0</button>
         <button class="dark" onclick="add('.')">.</button>
-        <button class="orange" onclick="calculate()">=</button>
+        <button class="orange" onclick="calc()">=</button>
+
+        <!-- SCIENTIFIC -->
+        <button class="blue" onclick="func('sin(')">sin</button>
+        <button class="blue" onclick="func('cos(')">cos</button>
+        <button class="blue" onclick="func('tan(')">tan</button>
+        <button class="blue" onclick="func('sqrt(')">√</button>
     </div>
 </div>
 
 <script>
 
-// ===== STATE =====
-let expression = "";
-let lastResult = "";
+// ================= STATE =================
+let expr = "";
 let history = document.getElementById("history");
 let display = document.getElementById("display");
 
-// ===== UI UPDATE =====
-function update() {
-    display.innerText = expression || "0";
-    display.classList.add("fade");
-    setTimeout(() => display.classList.remove("fade"), 100);
+// ================= UI =================
+function render() {
+    display.innerText = expr || "0";
 }
 
-// ===== INPUT =====
-function add(val) {
-    expression += val;
-    update();
+// ================= INPUT =================
+function add(v) {
+    expr += v;
+    render();
 }
 
-// ===== BACKSPACE =====
-function backspace() {
-    expression = expression.slice(0, -1);
-    update();
+function func(f) {
+    expr += f;
+    render();
 }
 
-// ===== CLEAR =====
+function back() {
+    expr = expr.slice(0, -1);
+    render();
+}
+
 function clearAll() {
-    expression = "";
-    update();
+    expr = "";
+    render();
 }
 
-// ===== SAFE ENGINE (REAL PRODUCT LEVEL) =====
-function solve(expr) {
+// ================= SCIENTIFIC CONVERTER =================
+function convert(expr) {
+    return expr
+        .replace(/sin\(/g, "Math.sin(")
+        .replace(/cos\(/g, "Math.cos(")
+        .replace(/tan\(/g, "Math.tan(")
+        .replace(/sqrt\(/g, "Math.sqrt(");
+}
+
+// ================= PRODUCTION ENGINE =================
+function tokenize(e) {
+    return e.match(/\d+(\.\d+)?|[+\-*/()]/g);
+}
+
+function precedence(op) {
+    return (op === "+" || op === "-") ? 1 : 2;
+}
+
+function toRPN(tokens) {
+    let out = [];
+    let ops = [];
+
+    for (let t of tokens) {
+        if (!isNaN(t)) out.push(Number(t));
+
+        else if (t === "(") ops.push(t);
+
+        else if (t === ")") {
+            while (ops.length && ops.at(-1) !== "(") {
+                out.push(ops.pop());
+            }
+            ops.pop();
+        }
+
+        else {
+            while (ops.length && precedence(ops.at(-1)) >= precedence(t)) {
+                out.push(ops.pop());
+            }
+            ops.push(t);
+        }
+    }
+
+    while (ops.length) out.push(ops.pop());
+    return out;
+}
+
+function evalRPN(rpn) {
+    let s = [];
+
+    for (let t of rpn) {
+        if (typeof t === "number") s.push(t);
+        else {
+            let b = s.pop();
+            let a = s.pop();
+
+            if (t === "+") s.push(a + b);
+            if (t === "-") s.push(a - b);
+            if (t === "*") s.push(a * b);
+            if (t === "/") s.push(a / b);
+        }
+    }
+
+    return s[0];
+}
+
+// ================= CALCULATE =================
+function calc() {
     try {
-        // safer than eval but still simple for product demo
-        return Function("return " + expr)();
+        history.innerText = expr;
+
+        let safe = convert(expr);
+        let tokens = tokenize(safe);
+        let rpn = toRPN(tokens);
+        let result = evalRPN(rpn);
+
+        expr = result.toString();
+        render();
     } catch {
-        return "Error";
+        expr = "Error";
+        render();
     }
 }
 
-// ===== CALCULATE =====
-function calculate() {
-    if (!expression) return;
-
-    let result = solve(expression);
-
-    // Save history
-    history.innerText = expression + " = " + result;
-
-    lastResult = result;
-    expression = result.toString();
-
-    update();
-}
-
-// ===== KEYBOARD SUPPORT =====
+// ================= KEYBOARD =================
 document.addEventListener("keydown", (e) => {
     if (!isNaN(e.key)) add(e.key);
-    if (["+", "-", "*", "/", "."].includes(e.key)) add(e.key);
-    if (e.key === "Enter") calculate();
-    if (e.key === "Backspace") backspace();
+    if ("+-*/().".includes(e.key)) add(e.key);
+    if (e.key === "Enter") calc();
+    if (e.key === "Backspace") back();
     if (e.key === "Escape") clearAll();
 });
 
-update();
+render();
 
 </script>
 
